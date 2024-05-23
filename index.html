@@ -4,207 +4,299 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Control de Reparaciones</title>
-    <link rel="stylesheet" href="estilos.css">
-    
+    <link rel="stylesheet" type="text/css" href="estilos.css">
 </head>
 <body>
-    
-    <div class="container_principal">
-        <div class="container_registro">
-            <h3>Registro de Reparaciones</h3>
+    <div class="container">
+        <div class="containerRepairForm">
             <form id="repairForm">
-                <label for="name">Nombre del Cliente</label>
-                <input type="text" id="name" name="name" required>
-
-                <label for="phone">Teléfono del Cliente</label>
-                <input type="tel" id="phone" name="phone" required>
-
-                <label for="reference">Referencia del Aparato</label>
-                <input type="text" id="reference" name="reference" required>
-
-                <label for="details">Detalles de la Reparación</label>
-                <textarea id="details" name="details" rows="4" required></textarea>
-
-                <label for="price">Precio del Arreglo</label>
-                <input type="number" id="price" name="price" required>
-
-                <label for="deposit">Abono</label>
-                <input type="number" id="deposit" name="deposit" required>
-
-                <label for="status">Estado</label>
-                <select id="status" name="status" required>
+                <h2>Registro de Reparaciones</h2>
+                <br><input type="text" id="name" name="name" placeholder="Nombre" required>
+                <br><input type="tel" id="phone" name="phone" placeholder="Teléfono del Cliente" required>
+                <br><input type="text" id="reference" name="reference" placeholder="Referencia del Aparato">
+                <br><textarea id="details" name="details" rows="4" placeholder="Detalles de la Reparación" required></textarea>
+                <br><input type="number" id="price" name="price" placeholder="Precio del Arreglo" required>
+                <br><input type="number" id="deposit" name="deposit" placeholder="Abono" required>
+                <br><label for="status">Estado</label>
+                <br><select id="status" name="status" required>
                     <option value="Completado">Completado</option>
                     <option value="No Reparado">No Reparado</option>
                     <option value="Revisando">Revisando</option>
                     <option value="Pendiente Repuesto">Pendiente Repuesto</option>
                 </select>
-
-                <label for="entryDate">Fecha de Ingreso</label>
+                <br><label for="entryDate">Fecha de Ingreso</label>
                 <input type="date" id="entryDate" name="entryDate" required>
 
-                <label for="deliveryDate">Fecha de Entrega</label>
+                <br><label for="deliveryDate">Fecha de Entrega</label>
                 <input type="date" id="deliveryDate" name="deliveryDate">
-
-                <button type="submit">Registrar</button>
+                <br><button type="submit">Registrar</button>
             </form>
         </div>
+        <div class="containerRepairList">
+            <div class="repair-list" id="repairList">
+                <select id="filterStatus" onchange="filterRepairs()">
+                    <option value="">Todos</option>
+                    <option value="Completado">Completado</option>
+                    <option value="No Reparado">No Reparado</option>
+                    <option value="Revisando">Revisando</option>
+                    <option value="Pendiente Repuesto">Pendiente Repuesto</option>
+                </select>
+                <br><label for="searchQuery">Buscar x Nombre o teléfono</label>
+                <input type="text" id="searchQuery" placeholder="Buscar..">
+            </div>
+        </div>
+        <div class="containerEditForm">
+            <div class="container" id="editContainer" style="display: none;">
+                <h1>Editar Reparación</h1>
+                <form id="editForm">
+                    <input type="hidden" id="editId">
         
-        <div class="container_listado" id="repairList">
-                <script>
-                document.getElementById('repairForm').addEventListener('submit', async function(e) {  /* registramos las reparaciones */
-                    e.preventDefault();
-
-                    const data = {
-                        name: document.getElementById('name').value,
-                        phone: document.getElementById('phone').value,
-                        reference: document.getElementById('reference').value,
-                        details: document.getElementById('details').value,
-                        price: document.getElementById('price').value,
-                        deposit: document.getElementById('deposit').value,
-                        status: document.getElementById('status').value,
-                        entryDate: document.getElementById('entryDate').value,
-                        deliveryDate: document.getElementById('deliveryDate').value
-                    };
-
-                    try {
-                        const response = await fetch('http://localhost:3000/register', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(data)
-                        });
-
-                        if (response.ok) {
-                            alert('Registro exitoso');
-                            document.getElementById('repairForm').reset();
-                            loadRepairs();
-                        } else {
-                            alert('Error en el registro');
-                        }
-                    } catch (error) {
-                        console.error('Error:', error);
-                        alert('Error en la solicitud');
-                    }
-                });
-                async function loadRepairs() {   /* cargamos las reparaciones */
-                    try {
-                        const response = await fetch('http://localhost:3000/repairs');
-                        const repairs = await response.json();
-                        const repairList = document.getElementById('repairList');
-
-                        repairList.innerHTML = '<h3>Reparaciones Registradas</h3>'; // Reset list
-
-                        repairs.forEach(repair => {
-                            const repairItem = document.createElement('div');
-                            repairItem.className = 'repair-item';
-
-                            repairItem.innerHTML = `
-                                <p><strong>Nombre:</strong> ${repair.name}</p>
-                                <p><strong>Teléfono:</strong> ${repair.phone}</p>
-                                <p><strong>Referencia:</strong> ${repair.reference}</p>
-                                <div id='leer_mas${repair.id}'>
-                                    <a href='#' onclick='document.getElementById("contenido${repair.id}").style.display = "block"; document.getElementById("leer_mas${repair.id}").style.display = "none";'>Leer más ${repair.id}</a>
-                                </div>
-                                <div id='contenido${repair.id}' style="display: none;">
-                                    <a href='#' onclick='document.getElementById("contenido${repair.id}").style.display = "none"; document.getElementById("leer_mas${repair.id}").style.display = "block";'>Leer menos${repair.id}</a>
-                                <p><strong>Detalles:</strong> ${repair.details}</p>
-                                <p><strong>Precio:</strong> ${repair.price}</p>
-                                <p><strong>Abono:</strong> ${repair.deposit}</p>
-                                <p><strong>Estado:</strong> ${repair.status}</p>
-                                <p><strong>Fecha de Ingreso:</strong> ${repair.entry_date}</p>
-                                <p><strong>Fecha de Entrega:</strong> ${repair.delivery_date || 'N/A'}</p>
-                                <button class="status-pending" onclick="updateStatus(${repair.id}, 'Pendiente Repuesto')">Pendiente Repuesto</button>
-                                <button class="status-in-process" onclick="updateStatus(${repair.id}, 'En Proceso')">En Proceso</button>
-                                <button class="status-ok" onclick="updateStatus(${repair.id}, 'Completado')">Completado</button>
-                                <button class="status-no-repair" onclick="updateStatus(${repair.id}, 'No Reparado')">No Reparado</button>
-                                </div>
-                            `;
-
-                            repairList.appendChild(repairItem);
-                        });
-                    } catch (error) {
-                        console.error('Error:', error);
-                        alert('Error al obtener los datos');
-                    }
-                }
-                async function updateStatus(id, status) {     /*actualizamos el estado */
-                    try {
-                        const response = await fetch(`http://localhost:3000/update-status/${id}`, {
-                            method: 'PUT',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({ status })
-                        });
-
-                        if (response.ok) {
-                            alert('Estado actualizado');
-                            loadRepairs();
-                        } else {
-                            alert('Error al actualizar el estado');
-                        }
-                    } catch (error) {
-                        console.error('Error:', error);
-                        alert('Error en la solicitud');
-                    }
-                }
-                async function filterRepairs() {  // funcion para filtrar las reparaciones //
-                    const status = document.getElementById('filterStatus').value;
-                    const url = status ? `http://localhost:3000/repairs/status/${status}` : 'http://localhost:3000/repairs';
-
-                    try {
-                        const response = await fetch(url);
-                        const repairs = await response.json();
-                        displayRepairs(repairs);
-                    } catch (error) {
-                        console.error('Error:', error);
-                        alert('Error al filtrar los datos');
-                    }
-                }
-
-                function displayRepairs(repairs) {
-                    const repairList = document.getElementById('repairList');
-                    repairList.innerHTML = `
-                        <h1>Reparaciones Registradas</h1>
-                        <label for="filterStatus">Filtrar por estado</label>
-                        <select id="filterStatus" onchange="filterRepairs()">
-                            <option value="">Todos</option>
-                            <option value="Completado">Completado</option>
-                            <option value="No Reparado">No Reparado</option>
-                            <option value="Revisando">Revisando</option>
-                            <option value="Pendiente Repuesto">Pendiente Repuesto</option>
-                        </select>
-                    `;
-
-                    repairs.forEach(repair => {
-                        const repairItem = document.createElement('div');
-                        repairItem.className = 'repair-item';
-
-                        repairItem.innerHTML = `
-                            <h2>${repair.name}</h2>
-                            <p><strong>Teléfono:</strong> ${repair.phone}</p>
-                            <p><strong>Referencia:</strong> ${repair.reference}</p>
-                            <p><strong>Detalles:</strong> ${repair.details}</p>
-                            <p><strong>Precio:</strong> ${repair.price}</p>
-                            <p><strong>Abono:</strong> ${repair.deposit}</p>
-                            <p><strong>Estado:</strong> ${repair.status}</p>
-                            <p><strong>Fecha de Ingreso:</strong> ${repair.entry_date}</p>
-                            <p><strong>Fecha de Entrega:</strong> ${repair.delivery_date || 'N/A'}</p>
-                            <button class="update-status status-pending" onclick="updateStatus(${repair.id}, 'Pendiente Repuesto')">Pendiente Repuesto</button>
-                            <button class="update-status status-in-process" onclick="updateStatus(${repair.id}, 'En Proceso')">En Proceso</button>
-                            <button class="update-status" onclick="updateStatus(${repair.id}, 'Completado')">Completado</button>
-                        `;
-
-                        repairList.appendChild(repairItem);
-                    });
-                }
-                
-                
-
-                window.onload = loadRepairs;
-            </script>
+                    <label for="editName">Nombre del Cliente</label>
+                    <input type="text" id="editName" name="name" required>
+        
+                    <label for="editPhone">Teléfono del Cliente</label>
+                    <input type="tel" id="editPhone" name="phone" required>
+        
+                    <label for="editReference">Referencia del Aparato</label>
+                    <input type="text" id="editReference" name="reference" required>
+        
+                    <label for="editDetails">Detalles de la Reparación</label>
+                    <textarea id="editDetails" name="details" rows="4" required></textarea>
+        
+                    <label for="editPrice">Precio del Arreglo</label>
+                    <input type="number" id="editPrice" name="price" required>
+        
+                    <label for="editDeposit">Abono</label>
+                    <input type="number" id="editDeposit" name="deposit" required>
+        
+                    <label for="editStatus">Estado</label>
+                    <select id="editStatus" name="status" required>
+                        <option value="Completado">Completado</option>
+                        <option value="No Reparado">No Reparado</option>
+                        <option value="Revisando">Revisando</option>
+                        <option value="Pendiente Repuesto">Pendiente Repuesto</option>
+                    </select>
+        
+                    <label for="editEntryDate">Fecha de Ingreso</label>
+                    <input type="date" id="editEntryDate" name="entryDate" required>
+        
+                    <label for="editDeliveryDate">Fecha de Entrega</label>
+                    <input type="date" id="editDeliveryDate" name="deliveryDate">
+        
+                    <button type="submit">Guardar Cambios</button>
+                    <button type="button" onclick="hideEditForm()">Cancelar</button>
+                </form>
+            </div>
         </div>
     </div>
+    
+
+    <script>
+        document.getElementById('repairForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const data = {
+                name: document.getElementById('name').value,
+                phone: document.getElementById('phone').value,
+                reference: document.getElementById('reference').value,
+                details: document.getElementById('details').value,
+                price: document.getElementById('price').value,
+                deposit: document.getElementById('deposit').value,
+                status: document.getElementById('status').value,
+                entryDate: document.getElementById('entryDate').value,
+                deliveryDate: document.getElementById('deliveryDate').value
+            };
+
+            try {
+                const response = await fetch('http://localhost:3000/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    alert('Registro exitoso');
+                    document.getElementById('repairForm').reset();
+                    loadRepairs();
+                } else {
+                    alert('Error en el registro');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error en la solicitud');
+            }
+        });
+
+        document.getElementById('editForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const data = {
+                name: document.getElementById('editName').value,
+                phone: document.getElementById('editPhone').value,
+                reference: document.getElementById('editReference').value,
+                details: document.getElementById('editDetails').value,
+                price: document.getElementById('editPrice').value,
+                deposit: document.getElementById('editDeposit').value,
+                status: document.getElementById('editStatus').value,
+                entryDate: document.getElementById('editEntryDate').value,
+                deliveryDate: document.getElementById('editDeliveryDate').value
+            };
+
+            const id = document.getElementById('editId').value;
+
+            try {
+                const response = await fetch(`http://localhost:3000/repairs/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    alert('Reparación actualizada exitosamente');
+                    document.getElementById('editForm').reset();
+                    hideEditForm();
+                    loadRepairs();
+                } else {
+                    alert('Error al actualizar la reparación');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error en la solicitud');
+            }
+        });
+
+        async function loadRepairs() {
+            try {
+                const response = await fetch('http://localhost:3000/repairs');
+                const repairs = await response.json();
+                displayRepairs(repairs);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al obtener los datos');
+            }
+        }
+
+        async function filterRepairs() {
+            const status = document.getElementById('filterStatus').value;
+            const url = status ? `http://localhost:3000/repairs/status/${status}` : 'http://localhost:3000/repairs';
+
+            try {
+                const response = await fetch(url);
+                const repairs = await response.json();
+                displayRepairs(repairs);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al filtrar los datos');
+            }
+        }
+
+        async function searchRepairs() {
+            const query = document.getElementById('searchQuery').value;
+            console.log("en funcion searchRepairs()");
+            if (query.length < 3) {
+                loadRepairs();
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:3000/repairs/search?query=${query}`);
+                const repairs = await response.json();
+                displayRepairs(repairs);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al buscar las reparaciones');
+            }
+        }
+
+        function displayRepairs(repairs) {
+            const repairList = document.getElementById('repairList');
+            repairList.innerHTML = `
+                <h2>Reparaciones Registradas</h2>
+                <label for="filterStatus">Filtrar por estado</label>
+                <select id="filterStatus" onchange="filterRepairs()">
+                    <option value="">Todos</option>
+                    <option value="Completado">Completado</option>
+                    <option value="No Reparado">No Reparado</option>
+                    <option value="Revisando">Revisando</option>
+                    <option value="Pendiente Repuesto">Pendiente Repuesto</option>
+                </select>
+                <br><label for="searchQuery">Buscar x Nombre o teléfono</label>
+                <input type="text" id="searchQuery">
+                <br><input type="submit" id="searchQuery" onClick="searchRepairs()">
+            `;
+
+            repairs.forEach(repair => {
+                const repairItem = document.createElement('div');
+                repairItem.className = 'repair-item';
+
+                repairItem.innerHTML = `
+                    <p><strong>${repair.name}</strong></p>
+                    <li><strong>Teléfono:</strong> ${repair.phone}</li>
+                    <li><strong>Referencia:</strong> ${repair.reference}</li>
+                    <li><strong>Detalles:</strong> ${repair.details}</li>
+                    <li><strong>Precio:</strong> ${repair.price}</li>
+                    <li><strong>Abono:</strong> ${repair.deposit}</li>
+                    <li><strong>Estado:</strong> ${repair.status}</li>
+                    <li><strong>Fecha de Ingreso:</strong> ${repair.entry_date}</li>
+                    <li><strong>Fecha de Entrega:</strong> ${repair.delivery_date || 'N/A'}</li>
+                    <button class="update-status status-pending" onclick="updateStatus(${repair.id}, 'Pendiente Repuesto')">Pendiente Repuesto</button>
+                    <button class="update-status status-in-process" onclick="updateStatus(${repair.id}, 'En Proceso')">En Proceso</button>
+                    <button class="update-status status-no-reparado" onclick="updateStatus(${repair.id}, 'No Reparado')">No Reparado</button>
+                    <button class="update-status status-reparado" onclick="updateStatus(${repair.id}, 'Completado')">Completado</button>
+                    <button class="update-status" onclick="showEditForm(${repair.id}, '${repair.name}', '${repair.phone}', '${repair.reference}', '${repair.details}', ${repair.price}, ${repair.deposit}, '${repair.status}', '${repair.entry_date}', '${repair.delivery_date || ''}')">Editar</button>
+                `;
+
+                repairList.appendChild(repairItem);
+            });
+        }
+
+        async function updateStatus(id, status) {
+            try {
+                const response = await fetch(`http://localhost:3000/update-status/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ status })
+                });
+
+                if (response.ok) {
+                    alert('Estado actualizado exitosamente');
+                    filterRepairs();
+                } else {
+                    alert('Error al actualizar el estado');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error en la solicitud');
+            }
+        }
+
+        function showEditForm(id, name, phone, reference, details, price, deposit, status, entryDate, deliveryDate) {
+            document.getElementById('editId').value = id;
+            document.getElementById('editName').value = name;
+            document.getElementById('editPhone').value = phone;
+            document.getElementById('editReference').value = reference;
+            document.getElementById('editDetails').value = details;
+            document.getElementById('editPrice').value = price;
+            document.getElementById('editDeposit').value = deposit;
+            document.getElementById('editStatus').value = status;
+            document.getElementById('editEntryDate').value = entryDate;
+            document.getElementById('editDeliveryDate').value = deliveryDate;
+
+            document.getElementById('editContainer').style.display = 'block';
+        }
+
+        function hideEditForm() {
+            document.getElementById('editContainer').style.display = 'none';
+        }
+
+        // Cargar todas las reparaciones al cargar la página
+        loadRepairs();
+    </script>
 </body>
 </html>

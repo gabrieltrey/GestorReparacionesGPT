@@ -1,62 +1,82 @@
+/* Estilos para el cuerpo de la página */
 body {
     font-family: Arial, sans-serif;
+    font-size: 14px; /* Tamaño de texto general */
     background-color: #f4f4f9;
     color: #333;
-    margin: 0;
-    padding: 0;
+    margin: 10px;
+    padding: 10px;
+}
+
+/* Estilos para el contenedor principal */
+.container{
     display: flex;
-    flex-direction: column;
-    align-items: center;
+}
+.containerRepairForm {
+    display: flex;
+    gap: 20px;
+    align-items: safe;
+    justify-content:safe;
+    width: 33%;
+    margin: 5px;
     padding: 5px;
 }
-.container_principal{
-    background: #fff;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
-    width: 100%;
+.containerRepairList {
     display: flex;
+    gap: 20px;
+    align-items:start;
+    justify-content: start;
+    width: 33%;
+    margin: 5px;
+    padding: 5px;
 }
-.container_registro{
-    background: #fff;
-    padding: 15px;
-    margin-right: 5px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    width: 35%;
-    margin-bottom: 20px;
+.containerEditForm {
+    display: flex;
+    gap: 20px;
+    align-items: start;
+    width: 33%;
+    margin: 5px;
+    padding: 5px;
 }
-.container_listado{
-    background: #fff;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    width: 65%;
-    margin-bottom: 20px;
+
+
+/* Estilos CSS para el formulario de edición dentro del modal */
+#editContainer {
+    max-width: 100%;
 }
+
+/* Estilos para el formulario de registro */
+#repairForm {
+    flex: 1;
+    max-width: 400px;
+}
+
+/* Estilos para el listado de reparaciones */
+#repairList {
+    flex: 1;
+    max-width: 600px;
+}
+
+/* Estilos para los elementos de formulario */
 form {
-    display: flex;
+    display: inline;
     flex-direction: column;
 }
+
 label {
-    margin: 3px 0 3px;
+    margin: 5px 0 5px;
     color: #555;
 }
-input, textarea {
+
+input, select, textarea {
     padding: 5px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    margin-bottom: 5px;
+    margin-bottom: 2px;
 }
-select, textarea {
-    padding: 5px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-bottom: 5px;
-}
+
 button {
-    padding: 4px;
+    padding: 10px;
     background-color: #007bff;
     color: white;
     border: none;
@@ -64,48 +84,54 @@ button {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
+
 button:hover {
     background-color: #0056b3;
 }
+
 .repair-item {
-    background: #fff;
-    padding: 15px;
-    border: 1px solid #ddd;
+    background: #f6f1f1;
+    padding: 5px;
+    border: 1px solid #dead70;
     border-radius: 4px;
-    margin-bottom: 5px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    position: relative;
+    text-align: left;
 }
-.repair-item h2 {
-    margin: 0 0 10px;
-    font-size: 14px;
-    color: #333;
+
+/* Estilos adicionales para botones de actualización de estado */
+.update-status {
+    padding: 5px 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
-.repair-item p {
-    margin: 2px 0;
-    color: #666;
-}
-.status-ok {
-    background-color: #218838;
-}
-.status-ok:hover {
-    background-color: #257336;
-}
+
 .status-pending {
     background-color: #ffc107;
 }
+
 .status-pending:hover {
     background-color: #e0a800;
 }
+
 .status-in-process {
     background-color: #17a2b8;
 }
+
 .status-in-process:hover {
     background-color: #138496;
 }
-.status-no-repair {
-    background-color: #d41b0e;
+.status-no-reparado {
+    background-color: #d22e2e;
 }
-.status-no-repair:hover {
-    background-color: #942e2a;
+
+.status-no-reparado:hover {
+    background-color: #c94c4c;
+}
+.status-reparado {
+    background-color: #2b9026;
+}
+
+.status-reparado:hover {
+    background-color: #61c82d;
 }
