@@ -16,39 +16,72 @@ body {
     display: flex;
     gap: 20px;
     align-items: safe;
-    justify-content:safe;
-    width: 33%;
+    justify-content:center;
+    width: 25%;
     margin: 5px;
     padding: 5px;
+    border-radius: 10px;
+    border-style: double;
+
 }
 .containerRepairList {
     display: flex;
     gap: 20px;
     align-items:start;
-    justify-content: start;
-    width: 33%;
+    justify-content: center;
+    width: 50%;
     margin: 5px;
     padding: 5px;
+    border-radius: 10px;
+    border-style: dotted;
 }
-.containerEditForm {
-    display: flex;
+#containerEditForm {
+    background-color: #c94c4c;
+    position: absolute;
+    display: block;
     gap: 20px;
-    align-items: start;
-    width: 33%;
+    align-items: center;
+    justify-content: center;
     margin: 5px;
     padding: 5px;
+    border-radius: 10px;
+    border-style: double;
+    right: 0;
+    margin: 0 auto;
 }
 
 
-/* Estilos CSS para el formulario de edición dentro del modal */
-#editContainer {
+/* Estilos CSS para el formulario de edición */
+#editForm{
+    display: block;
     max-width: 100%;
+}
+#editForm input{
+    max-width: 100%;
+    background-color: rgb(253, 242, 241);
+    display: flex;
+}
+
+#editForm textarea{
+    max-width: 100%;
+    background-color: rgb(253, 242, 241);
+    display: flex;
+}
+#editForm select{
+    max-width: 100%;
+    background-color: rgb(253, 242, 241);
+    display: flex;
 }
 
 /* Estilos para el formulario de registro */
-#repairForm {
-    flex: 1;
-    max-width: 400px;
+#repairForm input{
+    display: flex;
+}
+#repairForm textarea{
+    display: flex;
+}
+#repairForm select{
+    display: flex;
 }
 
 /* Estilos para el listado de reparaciones */
@@ -134,4 +167,32 @@ button:hover {
 
 .status-reparado:hover {
     background-color: #61c82d;
+}
+#overlay {
+    display: none; /* Oculto por defecto */
+    position: fixed; /* Posición fija para permanecer en el mismo lugar al hacer scroll */
+    top: 50%; /* Centrado verticalmente */
+    left: 50%; /* Centrado horizontalmente */
+    transform: translate(-50%, -50%); /* Ajuste para centrar */
+    background-color: rgba(0, 0, 0, 0.8); /* Fondo semi-transparente */
+    color: white; /* Color de texto blanco */
+    padding: 20px; /* Relleno interno */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra para resaltar */
+    border-radius: 10px; /* Bordes redondeados */
+}
+
+#overlay .close-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #ff5c5c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#overlay .close-btn:hover {
+    background-color: #ff1c1c;
 }

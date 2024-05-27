@@ -1,105 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Control de Reparaciones</title>
-    <link rel="stylesheet" type="text/css" href="estilos.css">
-    <script src="script.js"></script>
-</head>
-<body>
-    <div class="container">
-        <div class="containerRepairForm">
-            <form id="repairForm">
-                <h3>Registro de Reparaciones</h3>
-                <label>Nombre del Cliente</label>
-                <input type="text" id="name" name="name" placeholder="Nombre" required>
-                <label>Telefóno Cliente</label>
-                <input type="tel" id="phone" name="phone" placeholder="Teléfono del Cliente" required>
-                <label>Referencia del Equipo</label>
-                <input type="text" id="reference" name="reference" placeholder="Referencia del Equipo">
-                <label>Detalles de la Reparacion</label>
-                <textarea id="details" name="details" rows="4" placeholder="Detalles de la Reparación" required></textarea>
-                <label>Precio Arreglo</label>
-                <input type="number" id="price" name="price" placeholder="Precio del Arreglo" required>
-                <label>Abono</label>
-                <input type="number" id="deposit" name="deposit" placeholder="Abono" required>
-                <label>Estado</label>
-                <label for="status">Estado</label>
-                <select id="status" name="status" required>
-                    <option value="Completado">Completado</option>
-                    <option value="No Reparado">No Reparado</option>
-                    <option value="Revisando">Revisando</option>
-                    <option value="Pendiente Repuesto">Pendiente Repuesto</option>
-                </select>
-                <label for="entryDate">Fecha de Ingreso</label>
-                <input type="date" id="entryDate" name="entryDate" required>
 
-                <br><label for="deliveryDate">Fecha de Entrega</label>
-                <input type="date" id="deliveryDate" name="deliveryDate">
-                <br><button type="submit">Registrar</button>
-            </form>
-        </div>
-        <div class="containerRepairList">
-            <div class="repair-list" id="repairList">
-                <select id="filterStatus" onchange="filterRepairs()">
-                    <option value="">Todos</option>
-                    <option value="Completado">Completado</option>
-                    <option value="No Reparado">No Reparado</option>
-                    <option value="Revisando">Revisando</option>
-                    <option value="Pendiente Repuesto">Pendiente Repuesto</option>
-                </select>
-                <br><label for="searchQuery">Buscar x Nombre o teléfono</label>
-                <input type="text" id="searchQuery" placeholder="Buscar..">
-            </div>
-        </div>
-        <div id="popup">
-            <div id="editContainer" style="display: none;">
-                <h3>Editar Reparación</h3>
-                <form id="editForm">
-                    <input type="hidden" id="editId">
-        
-                    <label for="editName">Nombre del Cliente</label>
-                    <input type="text" id="editName" name="name" required>
-        
-                    <label for="editPhone">Teléfono del Cliente</label>
-                    <input type="tel" id="editPhone" name="phone" required>
-        
-                    <label for="editReference">Referencia del Aparato</label>
-                    <input type="text" id="editReference" name="reference" required>
-        
-                    <label for="editDetails">Detalles de la Reparación</label>
-                    <textarea id="editDetails" name="details" rows="4" required></textarea>
-        
-                    <label for="editPrice">Precio del Arreglo</label>
-                    <input type="number" id="editPrice" name="price" required>
-        
-                    <label for="editDeposit">Abono</label>
-                    <input type="number" id="editDeposit" name="deposit" required>
-        
-                    <label for="editStatus">Estado</label>
-                    <select id="editStatus" name="status" required>
-                        <option value="Completado">Completado</option>
-                        <option value="No Reparado">No Reparado</option>
-                        <option value="Revisando">Revisando</option>
-                        <option value="Pendiente Repuesto">Pendiente Repuesto</option>
-                    </select>
-        
-                    <label for="editEntryDate">Fecha de Ingreso</label>
-                    <input type="date" id="editEntryDate" name="entryDate" required>
-        
-                    <label for="editDeliveryDate">Fecha de Entrega</label>
-                    <input type="date" id="editDeliveryDate" name="deliveryDate">
-        
-                    <button type="submit">Guardar Cambios</button>
-                    <button type="button" onclick="hideEditForm()">Cancelar</button>
-                </form>
-            </div>
-        </div>
-    </div>
-    
-
-    <script>
         document.addEventListener('click', function(event) {
             var popup = document.getElementById('popup');
             popup.style.left = event.pageX + 'px';
@@ -121,7 +20,6 @@
                 entryDate: document.getElementById('entryDate').value,
                 deliveryDate: document.getElementById('deliveryDate').value
             };
-
             try {
                 const response = await fetch('http://localhost:3000/register', {
                     method: 'POST',
@@ -247,9 +145,7 @@
             repairs.forEach(repair => {
                 const repairItem = document.createElement('div');
                 repairItem.className = 'repair-item';
-
                 repairItem.innerHTML = `
-                    
                     <p><strong>${repair.name}</strong></p>
                     <li><strong>Teléfono:</strong> ${repair.phone}</li>
                     <li><strong>Referencia:</strong> ${repair.reference}</li>
@@ -265,7 +161,6 @@
                     <button class="update-status status-reparado" onclick="updateStatus(${repair.id}, 'Completado')">Completado</button>
                     <button class="update-status" onclick="showEditForm(${repair.id}, '${repair.name}', '${repair.phone}', '${repair.reference}', '${repair.details}', ${repair.price}, ${repair.deposit}, '${repair.status}', '${repair.entry_date}', '${repair.delivery_date || ''}')">Editar</button>
                 `;
-
                 repairList.appendChild(repairItem);
             });
         }
@@ -305,8 +200,7 @@
             document.getElementById('editDeliveryDate').value = deliveryDate;
             document.getElementById('editContainer').style.display = 'block';
             document.getElementById('containerEditForm').style.display='block';
-            document.getElementById('containerEditForm').style.top = '20%';
-            document.getElementById('containerEditForm').style.left = '50%';
+
         }
 
         function hideEditForm() {
@@ -316,6 +210,3 @@
 
         // Cargar todas las reparaciones al cargar la página
         loadRepairs();
-    </script>
-</body>
-</html>
