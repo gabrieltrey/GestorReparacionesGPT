@@ -1,198 +1,223 @@
 /* Estilos para el cuerpo de la página */
 body {
-    font-family: Arial, sans-serif;
-    font-size: 14px; /* Tamaño de texto general */
-    background-color: #f4f4f9;
-    color: #333;
-    margin: 10px;
-    padding: 10px;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  /* Tamaño de texto general */
+  background-color: #f4f4f9;
+  color: #333;
+  margin: 10px;
+  padding: 10px;
 }
 
 /* Estilos para el contenedor principal */
-.container{
-    display: flex;
+.container {
+  display: flex;
 }
+
 .containerRepairForm {
-    display: flex;
-    gap: 20px;
-    align-items: safe;
-    justify-content:center;
-    width: 25%;
-    margin: 5px;
-    padding: 5px;
-    border-radius: 10px;
-    border-style: double;
-
+  display: flex;
+  gap: 20px;
+  align-items: safe;
+  justify-content: center;
+  width: 12%;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 10px;
+  border-style: double;
 }
+
 .containerRepairList {
-    display: flex;
-    gap: 20px;
-    align-items:start;
-    justify-content: center;
-    width: 50%;
-    margin: 5px;
-    padding: 5px;
-    border-radius: 10px;
-    border-style: dotted;
-}
-#containerEditForm {
-    background-color: #c94c4c;
-    position: absolute;
-    display: block;
-    gap: 20px;
-    align-items: center;
-    justify-content: center;
-    margin: 5px;
-    padding: 5px;
-    border-radius: 10px;
-    border-style: double;
-    right: 0;
-    margin: 0 auto;
+  display: block;
+  gap: 50px;
+  align-items: start;
+  justify-content: start;
+  width: 100%;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 10px;
+  border-style: dotted;
 }
 
+#containerEditForm {
+  background-color: #c94c4c;
+  position: absolute;
+  display: block;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 10px;
+  border-style: double;
+  right: 0;
+  margin: 0 auto;
+}
 
 /* Estilos CSS para el formulario de edición */
-#editForm{
-    display: block;
-    max-width: 100%;
-}
-#editForm input{
-    max-width: 100%;
-    background-color: rgb(253, 242, 241);
-    display: flex;
+#editForm {
+  display: block;
+  max-width: 100%;
 }
 
-#editForm textarea{
-    max-width: 100%;
-    background-color: rgb(253, 242, 241);
-    display: flex;
+#editForm input {
+  max-width: 100%;
+  background-color: rgb(253, 242, 241);
+  display: flex;
 }
-#editForm select{
-    max-width: 100%;
-    background-color: rgb(253, 242, 241);
-    display: flex;
+
+#editForm textarea {
+  max-width: 100%;
+  background-color: rgb(253, 242, 241);
+  display: flex;
+}
+
+#editForm select {
+  max-width: 100%;
+  background-color: rgb(253, 242, 241);
+  display: flex;
 }
 
 /* Estilos para el formulario de registro */
-#repairForm input{
-    display: flex;
+#repairForm input {
+  display: flex;
 }
-#repairForm textarea{
-    display: flex;
+
+#repairForm textarea {
+  display: flex;
 }
-#repairForm select{
-    display: flex;
+
+#repairForm select {
+  display: flex;
 }
 
 /* Estilos para el listado de reparaciones */
 #repairList {
-    flex: 1;
-    max-width: 600px;
+  /*flex: auto;*/
+  max-width: 100%;
 }
 
 /* Estilos para los elementos de formulario */
 form {
-    display: inline;
-    flex-direction: column;
+  display: inline;
+  flex-direction: column;
 }
 
 label {
-    margin: 5px 0 5px;
-    color: #555;
+  margin: 5px 0 5px;
+  color: #555;
 }
 
-input, select, textarea {
-    padding: 5px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-bottom: 2px;
+input,
+select,
+textarea {
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 2px;
 }
 
 button {
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
 .repair-item {
-    background: #f6f1f1;
-    padding: 5px;
-    border: 1px solid #dead70;
-    border-radius: 4px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    text-align: left;
+  width: 100%;
+  background: #eedcdc;
+  padding: 2px;
+  border: 1px solid #dead70;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+.repair-item td {
+  box-shadow: 0 1px 3px rgba(4, 245, 52, 0.1);
+  max-width: 150px;
+  max-height: 5px;
+  overflow-y: hidden;
+}
+.repair-item th {
+  border: 1px solid #e8c69d;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 /* Estilos adicionales para botones de actualización de estado */
 .update-status {
-    padding: 5px 5px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  padding: 5px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .status-pending {
-    background-color: #ffc107;
+  background-color: #ffc107;
 }
 
 .status-pending:hover {
-    background-color: #e0a800;
+  background-color: #e0a800;
 }
 
 .status-in-process {
-    background-color: #17a2b8;
+  background-color: #17a2b8;
 }
 
 .status-in-process:hover {
-    background-color: #138496;
+  background-color: #138496;
 }
+
 .status-no-reparado {
-    background-color: #d22e2e;
+  background-color: #d22e2e;
 }
 
 .status-no-reparado:hover {
-    background-color: #c94c4c;
+  background-color: #c94c4c;
 }
+
 .status-reparado {
-    background-color: #2b9026;
+  background-color: #2b9026;
 }
 
 .status-reparado:hover {
-    background-color: #61c82d;
-}
-#overlay {
-    display: none; /* Oculto por defecto */
-    position: fixed; /* Posición fija para permanecer en el mismo lugar al hacer scroll */
-    top: 50%; /* Centrado verticalmente */
-    left: 50%; /* Centrado horizontalmente */
-    transform: translate(-50%, -50%); /* Ajuste para centrar */
-    background-color: rgba(0, 0, 0, 0.8); /* Fondo semi-transparente */
-    color: white; /* Color de texto blanco */
-    padding: 20px; /* Relleno interno */
-    z-index: 1000; /* Asegura que esté por encima de otros elementos */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra para resaltar */
-    border-radius: 10px; /* Bordes redondeados */
+  background-color: #61c82d;
 }
 
-#overlay .close-btn {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 5px 10px;
-    background-color: #ff5c5c;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+#editContainer {
+  display: none;
+  position: absolute;
+  background-color: #e9b76c;
+  border: 1px solid #ccc;
+  padding: 10px;
+  z-index: 1000;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  box-shadow: #61c82d;
+  border: #d22e2e;
 }
 
-#overlay .close-btn:hover {
-    background-color: #ff1c1c;
+#divShowDetails {
+  display: none;
+  width: 27%;
+  position: absolute;
+  background-color: #e9b76c;
+  border: 1px solid #ccc;
+  padding: 10px;
+  z-index: 1000;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  box-shadow: #61c82d;
+  border: #d22e2e;
 }
